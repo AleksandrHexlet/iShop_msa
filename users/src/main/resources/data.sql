@@ -1,0 +1,7 @@
+-- создай троих админов с разными ролями и создай сначала все роли и после всех админов
+--CREATE TABLE IF NOT EXISTS tb_role
+--(
+--    id varchar(255) NOT NULL,
+--    roleType varchar(1000) NOT NULL,
+--    PRIMARY KEY(id)
+--);

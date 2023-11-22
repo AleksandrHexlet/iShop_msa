@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/adminHTML/login}" method="post">
+    <div th:if="${param.failed}">Ошибка ввода данных авторизации</div>
+    <div><label for="name">Имя пользователя</label>
+        <input type="text" name="username" id="name" placeholder="логин"><br></div>
+    <div><label for="password">Пароль</label>
+        <input type="password" name="password" id="password" placeholder="пароль"><br></div>
+    <input type="submit" value="Войти"></form>
+
+</body>
+</html>
