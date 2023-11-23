@@ -1,6 +1,7 @@
 rootProject.name = 'ishop_mra'
-include 'gateAway'
+include 'gateway'
 include 'registration'
 include 'libraryCommon'
 include 'users'
+include 'gateway'
 
