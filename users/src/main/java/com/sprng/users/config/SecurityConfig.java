@@ -1,7 +1,6 @@
 package com.sprng.users.config;
 
 
-import com.sprng.users.service.ClientDetailsService;
 import com.sprng.users.service.TraderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -81,6 +80,28 @@ public class SecurityConfig {
     public SecurityFilterChain permitTrader(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .securityMatcher("/oauth/trader/**")
+                .authenticationProvider(traderAuthenticationProvider())
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/oauth/trader/authorization").permitAll()
+                        // разрешаем всем запросы к static, css и тп папкам
+                        .requestMatchers("/css/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .usernameParameter("username").passwordParameter("password")
+                        .loginPage("/oauth/trader/authorization") // getMapping
+                        .failureUrl("/oauth/trader/authorization?failed")
+                        .defaultSuccessUrl("/oauth/trader/authorization/success")
+                        .loginProcessingUrl("/oauth/trader/authorization")); // postMapping //in form ---> th:action="@{/oauth/trader/authorization}"
+//        http.formLogin(Customizer.withDefaults());
+        return http.build();
+    }
+
+
+    @Bean
+    public SecurityFilterChain permitAdmin(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
+                .securityMatcher("/api/users/**")
                 .authenticationProvider(traderAuthenticationProvider())
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/oauth/trader/authorization").permitAll()

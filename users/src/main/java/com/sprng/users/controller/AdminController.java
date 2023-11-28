@@ -24,12 +24,12 @@ public class AdminController {
 
 
     @PostMapping
-    public ResponseEntity<AdminIshop> getAdmin(String username){
+    public ResponseEntity<AdminIshop> getAdminByUserName(String username){
         try{
-            AdminIshop adminIshop= adminService.getAdmin(username);
+            AdminIshop adminIshop= adminService.getAdminByUserName(username);
             return new ResponseEntity<AdminIshop>(adminIshop, HttpStatus.FOUND);
-        }catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Admin not found");
+        }catch (IshopResponseException exception){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,  exception.getMessage());
         }
     }
 

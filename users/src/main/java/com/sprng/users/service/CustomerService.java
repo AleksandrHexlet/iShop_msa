@@ -20,18 +20,18 @@ public class CustomerService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
-    private AuthenticationManager authenticationManager;
+//    private AuthenticationManager authenticationManager;
 
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder,
-                           AuthenticationManager authenticationManager
+                           PasswordEncoder passwordEncoder
+//                           ,AuthenticationManager authenticationManager
                            ) {
         this.customerRepository = customerRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
+//        this.authenticationManager = authenticationManager;
     }
 
     @Bean

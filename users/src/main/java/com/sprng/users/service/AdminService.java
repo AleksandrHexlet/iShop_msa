@@ -2,11 +2,13 @@ package com.sprng.users.service;
 
 import com.sprng.library.entity.AdminIshop;
 import com.sprng.library.entity.Role;
+import com.sprng.library.exception.IshopResponseException;
 import com.sprng.users.repository.AdminRepository;
 import com.sprng.users.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,15 +21,15 @@ public class AdminService {
 
     @Autowired
     public AdminService(
-                        RoleRepository roleRepository, AdminRepository adminRepository) {
+            RoleRepository roleRepository, AdminRepository adminRepository) {
 
         this.roleRepository = roleRepository;
         this.adminRepository = adminRepository;
     }
 
-    public AdminIshop getAdmin(String username) {
-
-        return  adminRepository.findByUserName(username);
+    public AdminIshop getAdminByUserName(String username) throws IshopResponseException{
+        return adminRepository.findByUserName(username)
+                .orElseThrow(()-> new IshopResponseException( "Admin not found"));
 
     }
 
@@ -45,12 +47,12 @@ public class AdminService {
             roleRepository.save(roleAdmin);
             roleRepository.save(roleReadOnlyAdmin);
 
-            AdminIshop admin = new AdminIshop();
+            AdminIshop admin = new AdminIshop("Иван Админ");
             admin.setRole(roleAdmin);
             admin.setUserName("admin");
             admin.setPassword("$2a$10$7oCTGflP2kNI3WP41FV2IOFyXVh9beW6e9ywgsew3/rmIOxoEq/LW");
 
-            AdminIshop readOnlyAdmin = new AdminIshop();
+            AdminIshop readOnlyAdmin = new AdminIshop("Ivan ReadOnly");
             readOnlyAdmin.setRole(roleReadOnlyAdmin);
             readOnlyAdmin.setUserName("readOnlyAdmin");
             readOnlyAdmin.setPassword("$2a$10$fnDj5PUIC0rWC1otWLxHbeRXK8Plfh1oHGriPC6QBI5cP99Tb3wTq");

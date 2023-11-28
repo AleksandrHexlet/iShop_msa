@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@EntityScan("com.sprng.library.entity")
+@EntityScan({"com.sprng.library.entity","com.sprng.users.entity"})
 @SpringBootApplication
 public class UsersApplication {
     public static void main(String[] args) {
