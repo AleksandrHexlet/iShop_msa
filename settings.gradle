@@ -4,4 +4,5 @@ include 'registration'
 include 'libraryCommon'
 include 'users'
 include 'gateway'
+include 'oAuth2'
 
