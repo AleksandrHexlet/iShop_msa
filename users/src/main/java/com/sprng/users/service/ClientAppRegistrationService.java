@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClientAppRegistrationService {
@@ -40,18 +37,21 @@ public class ClientAppRegistrationService {
     }
 
     private Map<String, Object> createTokenSettings() {
-        Map<String, Object> tokenSettings = new HashMap<>();// true или false - возможность повторного использования одного refresh токена
-        tokenSettings.put("settings.token.reuse-refresh-tokens", true);
-        tokenSettings.put("settings.token.authorization-code-time-to-live", Set.of(Duration.class.getName(),
+        Map<String, Object> tokenSettings = new HashMap<>();
+        tokenSettings.put("settings.token.reuse-refresh-tokens", true); // true или false - возможность повторного использования одного refresh токена
+        tokenSettings.put("settings.token.authorization-code-time-to-live", List.of(Duration.class.getName(),
                 Duration.ofMinutes(10))); // время жизни временного кода авторизации AUTHORIZATION_CODE, например 10 минут
-        tokenSettings.put("settings.token.access-token-time-to-live", Set.of(Duration.class.getName(),
-                Duration.ofDays(7))); // время жизни access токена, например 1 неделя
-        tokenSettings.put("settings.token.refresh-token-time-to-live", Set.of(Duration.class.getName(),
-                Duration.ofDays(30)));// время жизни refresh токена, например 30 дней
-        tokenSettings.put("settings.token.id-token-signature-algorithm", Set.of("org.springframework.security.oauth2.jose.jws.SignatureAlgorithm",
-                "RS256"));//алгоритм шифрования подписи
-        tokenSettings.put("settings.token.access-token-format", "{\"@class\" \"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat\"," +
-                "\"value\":\"self-contained\"}");// тип токена: self-contained. Ограничен временем жизни, содержит полезную нагрузку // (JWT - один из возможных форматов (реализаций) self-contained токенов)
+        tokenSettings.put("settings.token.access-token-time-to-live", List.of(Duration.class.getName(),
+                Duration.ofDays(7)));  // время жизни access токена, например 1 неделя
+        tokenSettings.put("settings.token.refresh-token-time-to-live", List.of(Duration.class.getName(),
+                Duration.ofDays(30))); // время жизни refresh токена, например 30 дней
+        tokenSettings.put("settings.token.id-token-signature-algorithm", List.of("org.springframework.security" +
+                ".oauth2.jose.jws.SignatureAlgorithm", "RS256")); //алгоритм шифрования подписи
+        Map<String, String> insert = new HashMap<>();
+        insert.put("@class", "org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat");
+        insert.put("value", "self-contained");// тип токена: self-contained. Ограничен временем жизни, содержит полезную нагрузку
+        // (JWT - один из возможных форматов (реализаций) self-contained токенов)
+        tokenSettings.put("settings.token.access-token-format", insert);
         return tokenSettings;
     }
 
