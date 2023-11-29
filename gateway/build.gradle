@@ -26,3 +26,6 @@ dependencyManagement {
 test {
     useJUnitPlatform()
 }
+
+
+//rate limit (Ограничение по количеству запросов.Защита от DDOS ) будем делать  ?

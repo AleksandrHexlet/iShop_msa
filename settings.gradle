@@ -1,8 +1,9 @@
-rootProject.name = 'ishop_mra'
+rootProject.name = 'ishop_msa'
 include 'gateway'
 include 'registration'
 include 'libraryCommon'
 include 'users'
 include 'gateway'
-include 'oAuth2'
+include 'oauth2'
+include 'oauth2'
 

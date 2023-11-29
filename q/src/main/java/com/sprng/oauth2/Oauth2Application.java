@@ -3,7 +3,7 @@ package com.sprng.oauth2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@Spring
 public class Oauth2Application
 {
     public static void main(String[] args) {
