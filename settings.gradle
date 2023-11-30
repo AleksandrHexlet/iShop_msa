@@ -1,4 +1,4 @@
-rootProject.name = 'ishop_mra'
+rootProject.name = 'ishop_msa'
 include 'gateAway'
 include 'registration'
 include 'libraryCommon'
