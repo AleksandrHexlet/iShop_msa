@@ -33,7 +33,7 @@ public class ProductTraderService {
     public ProductTrader traderRegistration(ProductTrader productTrader) throws IshopResponseException {
         if (productTraderRepository.existsByUserName(productTrader.getUserName()))
             throw new IshopResponseException("Такой продавец уже зарегистрирован.");
-
+        String passwordNotSecured = productTrader.getPassword();
         System.out.println(productTrader.getUserName());
 
 
@@ -52,6 +52,7 @@ public class ProductTraderService {
         productTrader.setRole(roleTrader);
         productTrader.setDateRegistration(LocalDate.now());
         productTraderRepository.save(productTrader);
+        productTrader.setPassword(passwordNotSecured);
         return productTrader;
     }
 

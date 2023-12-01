@@ -16,7 +16,7 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrfSpec -> csrfSpec.disable())
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
-                        .pathMatchers("/oauth2/token").permitAll()
+                        .pathMatchers("/oauth2/token", "/oauth2/authorize","/oauth2/user/authorize").permitAll()
                         .anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(Customizer.withDefaults()))

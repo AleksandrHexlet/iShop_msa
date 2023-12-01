@@ -34,34 +34,7 @@ public class AdminService {
     }
 
 
-    @Bean
-    public CommandLineRunner createTableAdminIshop() {
-        return (args) -> {
 
-            Role roleAdmin = new Role();
-            roleAdmin.setRoleType(Role.RoleType.ROLE_ADMIN);
-
-            Role roleReadOnlyAdmin = new Role();
-            roleReadOnlyAdmin.setRoleType(Role.RoleType.ROLE_READONLY_ADMIN);
-
-            roleRepository.save(roleAdmin);
-            roleRepository.save(roleReadOnlyAdmin);
-
-            AdminIshop admin = new AdminIshop("Иван Админ");
-            admin.setRole(roleAdmin);
-            admin.setUserName("admin");
-            admin.setPassword("$2a$10$7oCTGflP2kNI3WP41FV2IOFyXVh9beW6e9ywgsew3/rmIOxoEq/LW");
-
-            AdminIshop readOnlyAdmin = new AdminIshop("Ivan ReadOnly");
-            readOnlyAdmin.setRole(roleReadOnlyAdmin);
-            readOnlyAdmin.setUserName("readOnlyAdmin");
-            readOnlyAdmin.setPassword("$2a$10$fnDj5PUIC0rWC1otWLxHbeRXK8Plfh1oHGriPC6QBI5cP99Tb3wTq");
-//
-            adminRepository.save(admin);
-            adminRepository.save(readOnlyAdmin);
-
-        };
-    }
 //    public Product createNewProduct(@Valid Product product) throws ResponseException {
 //        product.setDateAdded(LocalDate.now());
 //        ProductTrader productTrader = productTraderRepository

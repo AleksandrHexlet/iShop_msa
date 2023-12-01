@@ -59,7 +59,7 @@ public class ClientAppRegistrationService {
 
     private Map<String, Object> createClientSettingsMap() {
         Map<String, Object> clientSettingsMap = new HashMap<>();
-        clientSettingsMap.put("settings.client.require-proof-key", false);
+        clientSettingsMap.put("settings.client.require-proof-key", true);
         clientSettingsMap.put("settings.client.require-authorization-consent", false);
         return clientSettingsMap;
     }
@@ -166,6 +166,8 @@ public class ClientAppRegistrationService {
                         .postLogoutRedirectUris(Set.of("https://iShop.com", "https://mail.ru"))
                         .tokenSettings(createTokenSettings())
                         .build();
+//                http://127.0.0.1:8080/oauth2/authorize?response_type=code&client_id=123&redirect_uri=https://yandex.ru&scope=Products.Write&code_challenge_method=S256&code_challenge=FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU
+
 
                 clientRegisterDataSecond = new ClientRegisterData.Builder("MyFrontCustom")
                         .id("2").clientId("234").clientSecret(passwordEncoder.encode("234"))
@@ -207,7 +209,7 @@ public class ClientAppRegistrationService {
     }
 
     public ClientRegisterData registrationAppClient(ClientRegisterData clientRegisterData) throws IshopResponseException {
-        if (clientAppRepository.existsByUserName(clientRegisterData.getClientName()))
+        if (clientAppRepository.existsByClientName(clientRegisterData.getClientName()))
             throw new IshopResponseException("The client application with this name exist");
         String clientSecretNotSecured = randomGeneration.generate(() -> {
             return String.valueOf(Math.random());

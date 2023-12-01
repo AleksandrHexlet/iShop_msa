@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/adminHTML.css}">
+</head>
+<body>
+<form action="#" method="post" th:action="@{/adminHTML/category}" th:object="${category}">
+
+    <div>
+        <label for="name">Название категории</label>
+        <input class="inputCSS" type="text" id="name" th:field="*{name}">
+        <!--        <input type="text" id="name" th:field="${category.name}"> -->
+        <br>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+    <div>
+        <label for="url">Название категории</label>
+        <input type="text" id="url" th:field="*{url}">
+        <!--        <input type="text" id="name" th:field="${category.name}"> -->
+        <br>
+        <span th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></span>
+    </div>
+
+    <label for="parent">Выберите родительскую категорию</label>
+    <select id="parent" th:field="*{parent}">
+        <option selected value="">Доступные категории</option>
+        <option th:each="itemCategory : ${categoriesAttr}" th:value="${itemCategory.id}" th:text="${itemCategory.name}">
+<!--        <option th:each="itemCategory : ${#lists.sort(categoriesAttr,reverse)}" th:value="${itemCategory.id}" th:text="${itemCategory.name}">-->
+        </option>
+
+    </select>
+    <button type="submit">Добавить категорию</button>
+
+</form>
+
+</body>
+</html>
+

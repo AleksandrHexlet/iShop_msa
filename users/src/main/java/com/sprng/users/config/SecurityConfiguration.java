@@ -24,7 +24,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("").hasAnyAuthority("SCOPE_")
+                        .requestMatchers("/api/users/trader/registration").hasAnyAuthority("SCOPE_Products.Read","SCOPE_Products.Write")
                         .requestMatchers("").hasAnyAuthority("SCOPE_")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2

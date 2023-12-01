@@ -11,10 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class CommonSecurityConfig {
     // перенесём в отдельный класс,
     // чтобы не создавать цикличных зависимостей
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(/*16*/);
-    }
 
 
 }

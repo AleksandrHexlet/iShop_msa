@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface ClientAppRepository extends CrudRepository<ClientRegisterData, String> {
 
-    Optional<ClientRegisterData> findByUserName(String userName);
-    boolean existsByUserName(String userName);
+    Optional<ClientRegisterData> findByClientName(String clientName);
+    boolean existsByClientName(String clientName);
 }

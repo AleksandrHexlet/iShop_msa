@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS oauth2_authorization
 (
     id                         varchar(255) NOT NULL,
