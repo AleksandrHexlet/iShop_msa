@@ -4,4 +4,6 @@ include 'registration'
 include 'libraryCommon'
 include 'users'
 include 'oauth2'
+include 'feedback'
+include 'category'
 

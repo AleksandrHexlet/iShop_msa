@@ -11,7 +11,9 @@ import com.sprng.users.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
@@ -20,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@ComponentScan(basePackages = "com.sprng.library.service")
+
+@Service
 public class InsertDataService {
 
     private RoleRepository roleRepository;
@@ -89,7 +94,8 @@ public class InsertDataService {
             AdminIshop admin = new AdminIshop("Иван Админ");
             admin.setRole(roleAdmin);
             admin.setUserName("admin");
-            admin.setPassword("$2a$10$7oCTGflP2kNI3WP41FV2IOFyXVh9beW6e9ywgsew3/rmIOxoEq/LW");
+//            admin.setPassword("$2a$10$7oCTGflP2kNI3WP41FV2IOFyXVh9beW6e9ywgsew3/rmIOxoEq/LW");
+            admin.setPassword(passwordEncoder.encode("123456789"));
 
             AdminIshop readOnlyAdmin = new AdminIshop("Ivan ReadOnly");
             readOnlyAdmin.setRole(roleReadOnlyAdmin);
@@ -123,7 +129,8 @@ public class InsertDataService {
 
     private Map<String, Object> createClientSettingsMap() {
         Map<String, Object> clientSettingsMap = new HashMap<>();
-        clientSettingsMap.put("settings.client.require-proof-key", true);
+        clientSettingsMap.put("settings.client.require-proof-key", true); // front обязан присылать code-challenge и
+        // code-challenge-method и code-verifare (это  code-challenge в не закодированном виде);
         clientSettingsMap.put("settings.client.require-authorization-consent", false);
         return clientSettingsMap;
     }
