@@ -22,11 +22,26 @@ public class CategoryService {
     }
 
     public Mono<Category> createCategory(Category category) throws IshopResponseException {
-        if(categoryRepository.findByName(category.getName()) != null) throw new IshopResponseException("category is exist");
-    return categoryRepository.save(category);
+//        if(categoryRepository.findByName(category.getName()) != null) throw new IshopResponseException("category is exist");
+        return categoryRepository.existsByName(category.getName())
+                .flatMap((exist -> {
+                    if (!exist) {   // mono = false
+                        return categoryRepository.save(category);
+                    }
+                    // mono = error
+                    return Mono.error(() -> new IshopResponseException("category already exist"));
+                }));
+
     }
 
     public Flux<Category> getCategories() {
-   return categoryRepository.findAll();
+        return categoryRepository.findAll();
+
     }
+
+    public Mono<Boolean> existsByCategoryID(int categoryID) {
+        return categoryRepository.existsById(categoryID);
+    }
+
+    ;
 }

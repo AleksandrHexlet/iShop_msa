@@ -13,6 +13,7 @@ public class Category {
     private String name;
     @Size(min = 2, max = 199, message = "Длина url должна быть равен или более 2 символам и менее 199 символов")
     private String url; // food sport  и т.д. это то, что отображается в строке браузера Например category/food
+    @Column("parent_id")
     private Category parent;
 
     public Category(String name, String url, Category parent) {
