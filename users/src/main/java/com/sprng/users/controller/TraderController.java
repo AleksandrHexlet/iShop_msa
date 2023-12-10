@@ -9,11 +9,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/trader")
@@ -36,17 +35,38 @@ public class TraderController {
 //    }
 
     @PostMapping("/registration")
-    public ResponseEntity<ProductTrader> traderRegistration(@Valid @RequestBody ProductTrader productTrader){
+    public ResponseEntity<ProductTrader> traderRegistration(@Valid @RequestBody ProductTrader productTrader) {
         System.out.println("productTrader === " + productTrader);
-        try{
+        try {
             ProductTrader productTraderFromDB = productTraderService.traderRegistration(productTrader);
             return new ResponseEntity<ProductTrader>(productTraderFromDB, HttpStatus.FOUND);
-        } catch(IshopResponseException exception){
+        } catch (IshopResponseException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неверные данные для регистрации продавца");
-
         }
-
     }
 
+    @GetMapping("/get/traders")
+    public List<ProductTrader> getTraders(@RequestParam String[] id) {
+        try {
+            List<ProductTrader> traderList = productTraderService.getAllTraderById(id);
+            return traderList;
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Traders not found");
+        }
+    }
 
 }
+
+
+//    Сервис Продукты
+//1. [POST] Добавить продукт.
+//        Нельзя добавить продукт в несуществующую категорию.
+//        2. [POST] Добавить несколько продуктов из файла.
+//        Нельзя добавить продукт в несуществующую категорию.
+//        3. [GET] Продукты по id категории (пагинация, плюс продавец каждого)
+//        4. [GET] Продукты по id продавца (пагинация, плюс категория каждого)
+//        5. [GET] Продукты по названию (плюс категория каждого, плюс продавец каждого)
+//        6. [GET] Продукты по нескольким характеристикам (плюс категория каждого, плюс продавец каждого)
+//        7. [GET] Продукты по названиям на заданную сумму (плюс категория каждого, плюс продавец каждого)
+//        8. [GET] Продукт по id (плюс отзывы??, плюс категория, плюс продавец)
+//        ??? Какие характеристики продукта, категории, продавца будут передаваться клиенту для пунктов №3 - №7 ???

@@ -5,9 +5,13 @@ import com.sprng.product.module.Product;
 import com.sprng.product.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -22,12 +26,28 @@ public class ProductController {
     }
 
     @PostMapping
-    public Mono<Product> createProduct(@RequestBody @Valid Product product){
-        return productService.createProduct(product).doOnError((throwable)-> {
+    public Mono<Product> createProduct(@RequestBody @Valid Product product, JwtAuthenticationToken authenticationToken){
+//        JwtAuthenticationToken authenticationToken -- тут роли ,scope
+        return productService.createProduct(product,authenticationToken).doOnError((throwable)-> {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,throwable.getMessage());
         });
     }
 
+    @GetMapping("products/category/{id}")
+    public Mono<Page<Product>> getProductsByCategoryID(@PathVariable int id, @RequestParam int size,
+                                                       @RequestParam int page){
+
+       return productService.getProductsByCategoryID(id, PageRequest.of(page,size)).doOnError((throwable)->{
+           throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, throwable.getMessage());
+       });
+    }
+
+
+
+    // тут для trader вернем имя и traderQualityIndex для отображения в карточке
+    // Если пользователь открывает карточку, тогда приходит отдельный запрос с id producta и мы вернем город
+    // нахождения склада с товаром, отзывы о продукте и рейтинг продукта.
+    // Как сделать пангинацию для webFlux and r2dbc ?
 
 }
 

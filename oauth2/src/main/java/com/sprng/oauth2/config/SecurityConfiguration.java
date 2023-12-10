@@ -39,8 +39,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -152,10 +151,20 @@ public class SecurityConfiguration {
         return context -> {
             if (context.getTokenType() == OAuth2TokenType.ACCESS_TOKEN) {
                 Authentication principal = context.getPrincipal();
-                Set<String> authorities = principal.getAuthorities().stream()
+                Optional<String> role = principal.getAuthorities().stream()
                         .map(authority -> authority.getAuthority())
-                        .collect(Collectors.toSet());
-                context.getClaims().claim("role", authorities);
+                        .findFirst();
+                if (!role.isEmpty()) {
+                        List<String> list = new ArrayList<>(context.getAuthorizedScopes());
+                        list.add(role.get());
+                        context.getClaims().claims(stringObjectMap -> stringObjectMap.put("scope", list));
+                }
+
+//                Set<String> authorities = principal.getAuthorities().stream()
+//                        .map(authority -> authority.getAuthority())
+//                        .collect(Collectors.toSet());
+//
+//                context.getClaims().claim("role", authorities);
             }
         };
     }

@@ -88,11 +88,6 @@ public class Product {
         return dateAdded;
     }
 
-    public int getProductManufacturer() {
-        return productTraderID;
-    }
-
-
     public int getCategoryProductID() {
         return categoryProductID;
     }

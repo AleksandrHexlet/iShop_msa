@@ -34,16 +34,6 @@ public class CustomerService {
 //        this.authenticationManager = authenticationManager;
     }
 
-    @Bean
-    public CommandLineRunner createRoleCustomer() {
-        return (args) -> {
-            Role roleCustomer = new Role();
-            roleCustomer.setRoleType(Role.RoleType.ROLE_CUSTOMER);
-            roleRepository.save(roleCustomer);
-        };
-    }
-
-
 
 
     public void customerRegistration(Customer customer) throws IshopResponseException {

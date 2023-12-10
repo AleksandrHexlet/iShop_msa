@@ -12,5 +12,6 @@ public interface LoginDataRepository <T extends LoginData> extends JpaRepository
     Optional<T> findByUserName(String userName);
     boolean existsByUserName(String userName);
     Optional<T> findByUserNameAndRoleRoleTypeIn(String userName, Collection<Role.RoleType> roleTypes);
+    boolean existsByIdAndUserNameAndRoleRoleType(int id,String username, Role.RoleType roleType);
 
 }

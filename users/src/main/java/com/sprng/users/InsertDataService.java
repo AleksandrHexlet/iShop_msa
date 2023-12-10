@@ -48,26 +48,34 @@ public class InsertDataService {
     @Bean
     public CommandLineRunner insertRole() {
         return (args) -> {
-            Role roleAdmin = new Role();
-            roleAdmin.setRoleType(Role.RoleType.ROLE_ADMIN);
-            roleRepository.save(roleAdmin);
+            if (!roleRepository.existsByRoleType(Role.RoleType.ROLE_ADMIN)) {
+                Role roleAdmin = new Role();
+                roleAdmin.setRoleType(Role.RoleType.ROLE_ADMIN);
+                roleRepository.save(roleAdmin);
+            }
+            if (!roleRepository.existsByRoleType(Role.RoleType.ROLE_TRADER)) {
+                Role roleTrader = new Role();
+                roleTrader.setRoleType(Role.RoleType.ROLE_TRADER);
+                roleRepository.save(roleTrader);
 
-            Role roleTrader = new Role();
-            roleTrader.setRoleType(Role.RoleType.ROLE_TRADER);
-            roleRepository.save(roleTrader);
+            }
+            if (!roleRepository.existsByRoleType(Role.RoleType.ROLE_CUSTOMER)) {
+                Role roleCustomer = new Role();
+                roleCustomer.setRoleType(Role.RoleType.ROLE_CUSTOMER);
+                roleRepository.save(roleCustomer);
+            }
 
-            Role roleCustomer = new Role();
-            roleCustomer.setRoleType(Role.RoleType.ROLE_CUSTOMER);
-            roleRepository.save(roleCustomer);
+            if (!roleRepository.existsByRoleType(Role.RoleType.ROLE_CLIENT_OWNER)) {
+                Role roleClientOwner = new Role();
+                roleClientOwner.setRoleType(Role.RoleType.ROLE_CLIENT_OWNER);
 
-            Role roleClientOwner = new Role();
-            roleClientOwner.setRoleType(Role.RoleType.ROLE_CLIENT_OWNER);
-            roleRepository.save(roleClientOwner);
-
-            Role roleClient = new Role();
-            roleClient.setRoleType(Role.RoleType.ROLE_CLIENT);
-            roleRepository.save(roleClient);
-
+                roleRepository.save(roleClientOwner);
+            }
+            if (!roleRepository.existsByRoleType(Role.RoleType.ROLE_READONLY_ADMIN)) {
+                Role roleReadOnlyAdmin = new Role();
+                roleReadOnlyAdmin.setRoleType(Role.RoleType.ROLE_READONLY_ADMIN);
+                roleRepository.save(roleReadOnlyAdmin);
+            }
 
         };
     }

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ProductTraderService {
@@ -54,6 +55,10 @@ public class ProductTraderService {
         productTraderRepository.save(productTrader);
         productTrader.setPassword(passwordNotSecured);
         return productTrader;
+    }
+
+    public List<ProductTrader> getAllTraderById(String[] id){
+        return productTraderRepository.findAllTraderById(id);
     }
 
 }
