@@ -51,12 +51,13 @@ public Mono<ProductFullInfo> getProductFullInfo(String[] TraderId){
         Mono<ProductTrader> traderList = clientUserService.getAllTraderById(TraderId);
     return null;
 }
-// monoZip
     public Mono<Page<Product>> getProductsByCategoryID(int id, Pageable pageable) {
         return productRepository.findAllByCategoryProductID(id, pageable)
-                .collectList()
+//                .flatMap((products) -> products.stream())
+                .zipWith(clientUserService.getAllTraderById())//все id положи в одну строку и положи getAllTraderById
+//                .collectList()
                 .zipWith(productRepository.count())
-                .map(tuple -> new PageImpl<Product>(tuple.getT1(), pageable, tuple.getT2()));
+                .map(tuple -> new PageImpl<ProductFullInfo>(tuple.getT1(), pageable, tuple.getT2()));
     }
 }
 

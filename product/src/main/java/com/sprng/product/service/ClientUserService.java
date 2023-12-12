@@ -31,9 +31,9 @@ public class ClientUserService {
    };
 
 
-    public Mono<ProductTrader> getAllTraderById (String[] id){
+    public Mono<ProductTrader> getAllTraderById (String id){
         return webClient.get()
-                .uri("/get/traders")
+                .uri("/get/traders?id=" + id)
                 .retrieve()
                 .bodyToMono(ProductTrader.class)
                 .timeout(Duration.of(1, ChronoUnit.SECONDS));
