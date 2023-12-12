@@ -8,6 +8,4 @@ import java.util.List;
 public interface ProductTraderRepository extends CrudRepository<ProductTrader, Integer>,LoginDataRepository<ProductTrader> {
     ProductTrader findByName(String productTraderName);
 
-    List<ProductTrader> findAllTraderById(String[] id);
-
 }

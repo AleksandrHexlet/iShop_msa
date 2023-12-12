@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -39,16 +40,19 @@ public class TraderController {
         System.out.println("productTrader === " + productTrader);
         try {
             ProductTrader productTraderFromDB = productTraderService.traderRegistration(productTrader);
-            return new ResponseEntity<ProductTrader>(productTraderFromDB, HttpStatus.FOUND);
+            return new ResponseEntity<ProductTrader>(productTraderFromDB, HttpStatus.CREATED);
         } catch (IshopResponseException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неверные данные для регистрации продавца");
         }
     }
 
     @GetMapping("/get/traders")
-    public List<ProductTrader> getTraders(@RequestParam String[] id) {
+    public List<ProductTrader> getTraders(@RequestParam String id) {
         try {
-            List<ProductTrader> traderList = productTraderService.getAllTraderById(id);
+           List<Integer> ids =  Arrays.stream(id.split(","))
+                   .map(str -> Integer.parseInt(str)).toList();
+
+            List<ProductTrader> traderList = productTraderService.getAllTraderById(ids);
             return traderList;
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Traders not found");

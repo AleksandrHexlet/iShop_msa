@@ -46,11 +46,12 @@ public class ProductService {
                 });
     }
 
-public Mono<ProductFullInfo> getProductFullInfo(String[] id){
-        Mono<ProductTrader> traderList = clientUserService.getAllTraderById(id);
-
+//public Mono<ProductFullInfo> getProductFullInfo(String[] TraderId){
+public Mono<ProductFullInfo> getProductFullInfo(String[] TraderId){
+        Mono<ProductTrader> traderList = clientUserService.getAllTraderById(TraderId);
+    return null;
 }
-
+// monoZip
     public Mono<Page<Product>> getProductsByCategoryID(int id, Pageable pageable) {
         return productRepository.findAllByCategoryProductID(id, pageable)
                 .collectList()
