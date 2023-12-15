@@ -21,4 +21,19 @@ public class ProductFullInfo extends Product {
         this.traderQualityIndex = traderQualityIndex;
     }
 
+    public String getTraderName() {
+        return traderName;
+    }
+
+    public void setTraderName(String traderName) {
+        this.traderName = traderName;
+    }
+
+    public double getTraderQualityIndex() {
+        return traderQualityIndex;
+    }
+
+    public void setTraderQualityIndex(double traderQualityIndex) {
+        this.traderQualityIndex = traderQualityIndex;
+    }
 }

@@ -2,6 +2,7 @@ package com.sprng.product.service;
 
 import com.sprng.library.entity.ProductTrader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -9,6 +10,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class ClientUserService {
@@ -31,12 +33,14 @@ public class ClientUserService {
    };
 
 
-    public Mono<ProductTrader> getAllTraderById (String id){
+    public Mono<List<ProductTrader>> getAllTraderById (String id){
         return webClient.get()
                 .uri("/get/traders?id=" + id)
                 .retrieve()
-                .bodyToMono(ProductTrader.class)
+                .bodyToMono(new ParameterizedTypeReference<List<ProductTrader>>() {
+                })
                 .timeout(Duration.of(1, ChronoUnit.SECONDS));
     }
+
 
 }

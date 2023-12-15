@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.security:spring-security-oauth2-jose:6.1.5'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.0'
+    testImplementation 'org.springframework.security:spring-security-test:6.2.0'
 
 }
 

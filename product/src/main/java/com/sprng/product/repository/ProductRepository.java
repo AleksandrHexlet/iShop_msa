@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface ProductRepository extends ReactiveMongoRepository<Product,Integer> {
 
-    Mono<List<Product>> findAllByCategoryProductID(int categoryProductID, Pageable pageable);
+    Flux<List<Product>> findAllByCategoryProductID(int categoryProductID, Pageable pageable);
 }

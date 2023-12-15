@@ -11,9 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/users/trader")
@@ -36,11 +37,18 @@ public class TraderController {
 //    }
 
     @PostMapping("/registration")
-    public ResponseEntity<ProductTrader> traderRegistration(@Valid @RequestBody ProductTrader productTrader) {
-        System.out.println("productTrader === " + productTrader);
+    public ResponseEntity<Void> traderRegistration(@Valid @RequestBody ProductTrader productTrader) {
+
         try {
+            System.out.println("productTraderFr ВАСЯ!!!!");
             ProductTrader productTraderFromDB = productTraderService.traderRegistration(productTrader);
-            return new ResponseEntity<ProductTrader>(productTraderFromDB, HttpStatus.CREATED);
+            System.out.println("productTraderFromDB.id === " + productTraderFromDB.getId());
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}").buildAndExpand(productTraderFromDB.getId()).toUri();
+            System.out.println("users.ProductTrader location == " + location.toString());
+            return ResponseEntity.created(location).build();
+//                    <ProductTrader>(productTraderFromDB, HttpStatus.CREATED);
         } catch (IshopResponseException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неверные данные для регистрации продавца");
         }
@@ -53,6 +61,7 @@ public class TraderController {
                    .map(str -> Integer.parseInt(str)).toList();
 
             List<ProductTrader> traderList = productTraderService.getAllTraderById(ids);
+            // вернем id; name, quolityIndex наприши свой sql запрос в репо и создай новую энтити шортпродуктТрейдер
             return traderList;
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Traders not found");

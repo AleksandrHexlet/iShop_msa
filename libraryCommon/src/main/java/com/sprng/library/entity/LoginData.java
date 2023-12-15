@@ -1,6 +1,7 @@
 package com.sprng.library.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -13,9 +14,10 @@ public class LoginData {
     @Id
     @GeneratedValue
     private int id;
-
+    @NotNull
     @Size(min = 2,max = 99)
     private String userName;
+    @NotNull
     @Size(min = 2,max = 99)
     private String password;
     @ManyToOne

@@ -1,3 +1,5 @@
+package com.sprng.users.unit;
+
 import com.sprng.users.Validator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
