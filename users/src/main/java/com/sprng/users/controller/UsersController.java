@@ -28,4 +28,8 @@ public class UsersController {
                                                     @PathVariable String role) {
         return usersService.existsUserByIdAndUserNameAndRole(id, username, role);
     }
+
+//    @GetMapping("/exists/customer/{customerId}/trader/{traderId}")
+
+
 }

@@ -14,11 +14,12 @@ public class Role {
 
     public enum RoleType {
         ROLE_ADMIN,
+        ROLE_READONLY_ADMIN,
         ROLE_CUSTOMER,
         ROLE_TRADER,
         ROLE_CLIENT_OWNER,
         ROLE_CLIENT,
-        ROLE_READONLY_ADMIN,
+
     }
 
     public RoleType getRoleType() {

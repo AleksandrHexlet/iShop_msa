@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
     AdminService adminService;
 
     @Autowired
@@ -31,11 +30,6 @@ public class AdminController {
         }catch (IshopResponseException exception){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,  exception.getMessage());
         }
-    }
-
-    @GetMapping
-    public String getAdmin1(String username){
- return " this is answer = " + username;
     }
 
 
