@@ -2,6 +2,7 @@ package com.sprng.product.controller;
 
 
 import com.sprng.product.module.Product;
+import com.sprng.product.module.ProductFullInfo;
 import com.sprng.product.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,12 @@ public class ProductController {
     }
 
     @GetMapping("products/category/{id}")
-    public Mono<Page<Product>> getProductsByCategoryID(@PathVariable int id, @RequestParam int size,
-                                                       @RequestParam int page){
-
+    public Flux<Page<ProductFullInfo>> getProductsByCategoryID(@PathVariable int id, @RequestParam int size,
+                                                               @RequestParam int page){
        return productService.getProductsByCategoryID(id, PageRequest.of(page,size)).doOnError((throwable)->{
            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, throwable.getMessage());
        });
     }
-
 
 
     // тут для trader вернем имя и traderQualityIndex для отображения в карточке

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -54,8 +55,8 @@ public class FeedBackController {
 
     @Secured("ROLE_CUSTOMER")
     @PostMapping("/complaint")
-    public ResponseEntity<Void> leaveComplaint(@Valid Complaint complaint) {
-        feedBackService.leaveComplaint(complaint)
+    public ResponseEntity<Void> leaveComplaint(@RequestBody @Valid Complaint complaint, JwtAuthenticationToken authenticationToken) {
+        feedBackService.leaveComplaint(complaint,authenticationToken)
                 .doOnError((throwable) -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, throwable.getMessage());
                 });
@@ -83,4 +84,5 @@ public class FeedBackController {
         // надо принять решение понижать рейтинг продавцап или нет. Используй countByProductTraderId в
         // compliantRepository
     }
+
 }

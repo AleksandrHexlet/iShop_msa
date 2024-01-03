@@ -18,10 +18,11 @@ public class ClientCustomerAndTraderService {
 
     }
 
-    public Mono<Boolean> existsByCustomerAndProductTrader(int customerId, int productTraderId){
-    return  webClient.get()
+    public Mono<Boolean> existsByCustomerAndProductTrader(int customerId, int productTraderId, String tokenValue) {
+        return webClient.get()
                 .uri("/exists/customer/{customerId}/trader/{productTraderId}",
-                        customerId,productTraderId)
+                        customerId, productTraderId)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(tokenValue))
                 .retrieve()
                 .bodyToMono(Boolean.class);
 //            .onErrorReturn(false);

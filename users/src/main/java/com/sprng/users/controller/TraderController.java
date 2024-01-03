@@ -8,7 +8,9 @@ import com.sprng.users.service.ProductTraderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
@@ -25,16 +27,6 @@ public class TraderController {
     public TraderController(ProductTraderService productTraderService) {
         this.productTraderService = productTraderService;
     }
-
-//    @PostMapping
-//    public ResponseEntity<ProductTrader> registrationTrader(String login, String password){
-//        try{
-//            ProductTrader productTrader = productTraderService.getProductTrader(username);
-//            return new ResponseEntity<Customer>(productTrader, HttpStatus.FOUND);
-//        }catch (Exception exception){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ProductTrader not found");
-//        }
-//    }
 
     @PostMapping("/registration")
     public ResponseEntity<Void> traderRegistration(@Valid @RequestBody ProductTrader productTrader) {
@@ -66,6 +58,17 @@ public class TraderController {
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Traders not found");
         }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/down/rating")
+    public ResponseEntity<String> downTraderRating(int traderId, double traderRating){
+      try{
+          productTraderService.downRatiting(traderId, traderRating);
+          return new ResponseEntity<>("Success", HttpStatusCode.valueOf(200));
+      } catch (IshopResponseException exception){
+          throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+      }
     }
 
 }

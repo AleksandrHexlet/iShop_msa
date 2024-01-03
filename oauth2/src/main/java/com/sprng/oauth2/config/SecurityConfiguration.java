@@ -60,9 +60,9 @@ public class SecurityConfiguration {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain filterChai1n(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        http.securityMatcher("/oauth2/authorize/**")
+    public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http); // oAuth2 берёт настройки(бины с реализацией для интерфейсов) из Spring Security,чтобы не писать нам самим их
+        http.securityMatcher("/oauth2/user/authorize/**")
                 .getConfigurer(OAuth2AuthorizationServerConfigurer.class);
         http.exceptionHandling((exceptions) -> exceptions
                 .defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/oauth2/user/authorize"),
@@ -93,9 +93,9 @@ public class SecurityConfiguration {
                 .formLogin(formLoginConfig -> formLoginConfig
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .loginPage("/oauth2/user/authorize")
+                        .loginPage("/oauth2/user/authorize") // get запрос на получение формы
                         .failureForwardUrl("/oauth2/user/authorize?failed")
-                        .loginProcessingUrl("/oauth2/user/authorize")
+                        .loginProcessingUrl("/oauth2/user/authorize") // нажали на кнопку войти и ушел пост запрос
                 )
                 .build();
     }

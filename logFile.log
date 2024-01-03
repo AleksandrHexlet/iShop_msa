@@ -1,0 +1,19 @@
+24-01-02 PM3830000002 02-25-15  INFO 23448 --- [restartedMain] com.sprng.category.CategoryApplication   : Starting CategoryApplication using Java 17.0.6 with PID 23448 (C:\Users\vin12\Desktop\SpringEdu\ishop_msa\category\build\classes\java\main started by vin12 in C:\Users\vin12\Desktop\SpringEdu\ishop_msa)
+24-01-02 PM4200000002 02-25-15  INFO 23448 --- [restartedMain] com.sprng.category.CategoryApplication   : No active profile set, falling back to 1 default profile: "default"
+24-01-02 PM5890000002 02-25-15  INFO 23448 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+24-01-02 PM5890000002 02-25-15  INFO 23448 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+24-01-02 PM1180000002 02-25-17  INFO 23448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+24-01-02 PM1200000002 02-25-17  INFO 23448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+24-01-02 PM3130000002 02-25-17  INFO 23448 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 189 ms. Found 1 R2DBC repository interfaces.
+24-01-02 PM3940000002 02-25-18  INFO 23448 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+24-01-02 PM4110000002 02-25-18  INFO 23448 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+24-01-02 PM4120000002 02-25-18  INFO 23448 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+24-01-02 PM5270000002 02-25-18  INFO 23448 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+24-01-02 PM5280000002 02-25-18  INFO 23448 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2936 ms
+24-01-02 PM3480000002 02-25-19  INFO 23448 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+24-01-02 PM1750000002 02-25-21 DEBUG 23448 --- [reactor-tcp-nio-1] o.s.r2dbc.connection.init.ScriptUtils    : Executing SQL script from file [C:\Users\vin12\Desktop\SpringEdu\ishop_msa\category\build\resources\main\schema.sql]
+24-01-02 PM2380000002 02-25-21  WARN 23448 --- [reactor-tcp-nio-1] i.r.p.client.ReactorNettyClient          : Notice: SEVERITY_LOCALIZED=ЗАМЕЧАНИЕ, SEVERITY_NON_LOCALIZED=NOTICE, CODE=42P07, MESSAGE=отношение "tb_category" уже существует, пропускается, FILE=parse_utilcmd.c, LINE=210, ROUTINE=transformCreateStmt
+24-01-02 PM2410000002 02-25-21 DEBUG 23448 --- [reactor-tcp-nio-1] o.s.r2dbc.connection.init.ScriptUtils    : 0 returned as update count for SQL: CREATE TABLE IF NOT EXISTS tb_category( id serial primary key, name varchar(199) NOT NULL, url varchar(199) NOT NULL, parent_id INTEGER REFERENCES tb_category(id) )
+24-01-02 PM2430000002 02-25-21 DEBUG 23448 --- [reactor-tcp-nio-1] o.s.r2dbc.connection.init.ScriptUtils    : Executed SQL script from file [C:\Users\vin12\Desktop\SpringEdu\ishop_msa\category\build\resources\main\schema.sql] in 66 ms.
+24-01-02 PM6710000002 02-25-21  INFO 23448 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+24-01-02 PM7170000002 02-25-21  INFO 23448 --- [restartedMain] com.sprng.category.CategoryApplication   : Started CategoryApplication in 7.124 seconds (process running for 7.776)

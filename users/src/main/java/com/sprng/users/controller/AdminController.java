@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class AdminController {
     AdminService adminService;
 
+
     @Autowired
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
@@ -31,6 +32,8 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,  exception.getMessage());
         }
     }
+
+
 
 
 }

@@ -57,14 +57,13 @@ public class ProductService {
     }
 
     public Flux<Page<ProductFullInfo>> getProductsByCategoryID(int id, Pageable pageable) {
-        return productRepository.findAllByCategoryProductID(id, pageable)// back List<Product>
+        return productRepository.findAllByCategoryProductID(id, pageable) // back List<Product>
                 .flatMap((products) -> {
                     String ids = products.stream().map(product -> String.valueOf(product
                                     .getProductTraderID()))
                             .collect(Collectors.joining(","));
                     return Flux.just(products).zipWith(clientUserService.getAllTraderById(ids));
                 })
-
                 .flatMap(tuple -> {
                     List<Product> productList = tuple.getT1();
                     Map<Integer, ProductTrader> productTraderList = tuple.getT2().stream().collect(Collectors.toMap(

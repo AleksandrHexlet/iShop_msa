@@ -6,6 +6,7 @@ import com.sprng.feedback.repository.CompliantRepository;
 import com.sprng.feedback.repository.FeedBackRepository;
 import com.sprng.library.exception.IshopResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
@@ -52,13 +53,38 @@ public class FeedBackService {
                     return feedBackRepository.save(feedback);
                 });
         return feedBack;
-    }
+
+//        Mono<FeedBack> feedBack1 = feedBackRepository.findById(feedBackID)
+//                .mergeWith(feedBackRepository.findById(feedBackID))
+//                .reduce((feedBackAccumulator, feedBack2)->{
+//                    FeedBack f3 = new FeedBack();
+//                    f3.setProductID(feedBackAccumulator.getProductID());
+//                    f3.setText(feedBack2.getText());
+//                    return f3;
+//                    //return Mono<Feedback>
+//                })
+//                .zipWith(Mono.just(33),(feedBack123,integer33)-> {
+//                 feedBack123.setText(String.valueOf(integer33));
+//                 return feedBack123;
+//                })
+//                .mergeWith(Mono.just(new FeedBack("qw",123,456)))
+//                .reduce((accum, feedBack12345)-> {
+//                    accum.setText(feedBack12345.getText());
+//                    return accum;
+//                });
+
+//        return feedBack;
+    };
+//Mono<List<Complaint>>
+//Flux<Complaint>
+//    flatMap
 
 
-    public Mono<Complaint> leaveComplaint(Complaint complaint) {
+    public Mono<Complaint> leaveComplaint(Complaint complaint, JwtAuthenticationToken authenticationToken) {
+        String tokenValue = authenticationToken.getToken().getTokenValue();
         clientCustomerAndTraderService
                 .existsByCustomerAndProductTrader(complaint.getCustomerId(),
-                        complaint.getProductTraderId()).flatMap((booleanValue) -> {
+                        complaint.getProductTraderId(),tokenValue).flatMap((booleanValue) -> {
                     if (booleanValue) {
                         complaint.setCreatedAt(ZonedDateTime.now());
                        return compliantRepository.save(complaint);
@@ -71,7 +97,6 @@ public class FeedBackService {
     }
 
     public Flux<Complaint> getUnprocessedComplaint() {
-
        return compliantRepository.findAllByStatusComplaintFalseOrderByCreatedAtDesc();
     }
 

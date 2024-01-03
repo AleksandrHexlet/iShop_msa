@@ -62,5 +62,13 @@ public class ProductTraderService {
         return productTraderRepository.findAllById(id);
     }
 
+    public void downRatiting(int traderId, double traderRating) throws IshopResponseException {
+          ProductTrader trader = productTraderRepository.findById(traderId)
+                  .orElseThrow(()-> new IshopResponseException("Trader not found"));
+          trader.setStoreQualityIndex(traderRating);
+          productTraderRepository.save(trader);
+    }
 }
+
+
 //http://127.0.0.1:9090/oauth2/authorize?response_type=code&client_id=$2a$10$.8ck0l.PVTGuKzrfPPpUBepgPHKWrhR.Un6/JjU/dWuYmfBOC1iTy&redirect_uri=http://localhost:8888/redirect&scope=openid read
