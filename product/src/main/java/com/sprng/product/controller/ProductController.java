@@ -36,8 +36,9 @@ public class ProductController {
 
     @GetMapping("products/category/{id}")
     public Flux<Page<ProductFullInfo>> getProductsByCategoryID(@PathVariable int id, @RequestParam int size,
-                                                               @RequestParam int page){
-       return productService.getProductsByCategoryID(id, PageRequest.of(page,size)).doOnError((throwable)->{
+                                                               @RequestParam int page,
+                                                               JwtAuthenticationToken authenticationToken){
+       return productService.getProductsByCategoryID(id,authenticationToken, PageRequest.of(page,size)).doOnError((throwable)->{
            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, throwable.getMessage());
        });
     }

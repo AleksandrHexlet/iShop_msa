@@ -34,7 +34,9 @@ public class DistanceApiService {
 
     public Flux<DistanceApiResponse> getDistanceToStorage(String deliveryCity) {
 //        Map<String, Integer> distanceToStorage = new HashMap<>();
-        return cityStorageRepository.findAll().collectList().flatMap((listCityStorage) -> {
+        return cityStorageRepository.findAll()
+                .collectList()
+                .flatMapMany((listCityStorage) -> {
             return webClient.get()
                     .uri(uriBuilder -> uriBuilder.path("/json")
                             .queryParam("origins", deliveryCity)
@@ -50,16 +52,25 @@ public class DistanceApiService {
         });
     }
 
-    ;
-
-    public Mono<Map<String, Integer>> getPriceDelivery(String deliveryCity) {
-        getDistanceToStorage(deliveryCity)
+    public Mono<Map<String, Integer>> getDistanceDelivery(String deliveryCity) {
+        return getDistanceToStorage(deliveryCity)
                 .collectMap(distanceApiResponse ->
                                 distanceApiResponse.getCityStorage(),
                         distanceApiResponse ->
                                 distanceApiResponse.getDistance()
+                        //расстояние от склада с товаром до адреса доставки
                 );
-    };
+    }
+    public Mono<Map<String, Integer>> getPriceDelivery(String deliveryCity) {
+        return getDistanceToStorage(deliveryCity)
+                .collectMap(distanceApiResponse ->
+                                distanceApiResponse.getCityStorage(),
+                        distanceApiResponse ->
+                                distanceApiResponse.getDistance() * 10
+                        //расстояние от склада с товаром до адреса доставки умножаем
+                        // на 10 рублей( стоимость км) и получаем стоимость доставки
+                );
+    }
 
 };
 

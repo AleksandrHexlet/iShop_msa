@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 //@Profile("dev")
 public class ConfigFile {
-    @Value("${configfile.name}")
-    String name;
-    @Value("${configfile.age}")
-    int age;
+//    @Value("${configfile.name}")
+//    String name;
+//    @Value("${configfile.age}")
+//    int age;
 
 }

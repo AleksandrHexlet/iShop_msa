@@ -7,18 +7,40 @@ public class ProductFullInfo extends Product {
 
     private String traderName;
     private double traderQualityIndex;
-
+    private double costDelivery;
+    private int distanceToStorage;
     public ProductFullInfo() {
     }
 
-    public ProductFullInfo(String nameProduct, String urlImage, BigDecimal price,
-                           double rating, int quantityStock, LocalDate dateAdded,
-                           int productTraderID, int categoryProductID, String traderName,
-                           double traderQualityIndex) {
-        super(nameProduct, urlImage, price, rating, quantityStock, dateAdded, productTraderID,
-                categoryProductID);
+    public ProductFullInfo(String traderName, double traderQualityIndex, double costDelivery, int distanceToStorage) {
         this.traderName = traderName;
         this.traderQualityIndex = traderQualityIndex;
+        this.costDelivery = costDelivery;
+        this.distanceToStorage = distanceToStorage;
+    }
+
+    public ProductFullInfo(String nameProduct, String urlImage, String cityStorage, BigDecimal price, double rating, int quantityStock, LocalDate dateAdded, int productTraderID, int categoryProductID, String traderName, double traderQualityIndex, double costDelivery, int distanceToStorage) {
+        super(nameProduct, urlImage, cityStorage, price, rating, quantityStock, dateAdded, productTraderID, categoryProductID);
+        this.traderName = traderName;
+        this.traderQualityIndex = traderQualityIndex;
+        this.costDelivery = costDelivery;
+        this.distanceToStorage = distanceToStorage;
+    }
+
+    public double getCostDelivery() {
+        return costDelivery;
+    }
+
+    public void setCostDelivery(double costDelivery) {
+        this.costDelivery = costDelivery;
+    }
+
+    public int getDistanceToStorage() {
+        return distanceToStorage;
+    }
+
+    public void setDistanceToStorage(int distanceToStorage) {
+        this.distanceToStorage = distanceToStorage;
     }
 
     public String getTraderName() {

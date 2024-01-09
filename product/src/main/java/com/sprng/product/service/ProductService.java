@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,17 @@ public class ProductService {
     private ProductRepository productRepository;
     private ClientCategoryService clientCategoryService;
     private ClientUserService clientUserService;
+    private  ClientCalculationCostDeliveryService clientCalculationCostDeliveryService;
+
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ClientCategoryService clientCategoryService, ClientUserService clientUserService) {
+    public ProductService(ProductRepository productRepository,
+                          ClientCategoryService clientCategoryService, ClientUserService clientUserService,
+                          ClientCalculationCostDeliveryService clientCalculationCostDeliveryService) {
         this.productRepository = productRepository;
         this.clientCategoryService = clientCategoryService;
         this.clientUserService = clientUserService;
+        this.clientCalculationCostDeliveryService = clientCalculationCostDeliveryService;
     }
 
     public Mono<Product> createProduct(Product product, JwtAuthenticationToken authenticationToken) {
@@ -56,7 +62,20 @@ public class ProductService {
         return null;
     }
 
-    public Flux<Page<ProductFullInfo>> getProductsByCategoryID(int id, Pageable pageable) {
+    public Flux<Page<ProductFullInfo>> getProductsByCategoryID(int id,
+                                                               JwtAuthenticationToken authenticationToken,
+                                                               Pageable pageable) {
+        String userNameCustomer = authenticationToken.getToken().getSubject();
+        String userCity = authenticationToken.getToken().getClaimAsString("customerCity");
+//добавь в токен город проживания и посмотри, что еще добавить в токен.
+// Взяли город проживания  из токена и передали его в метод getDistanceToStorage,
+// нам вернулась мапа с расстояниями, мы расстояния умножили на 10 рублей за км и получили стоимость
+// доставки, эту стоимость вшили в продуктфуллинфо
+// в продуктфуллинфо есть город в котором на складе лежит продукт. Мы ищем название этого города в мапе distanceToStorage и зашиваем в продукт фулинфо растояние между скалдом и местом доставки
+
+        Map<String,Integer> distanceToStorage = clientCalculationCostDeliveryService
+                .getDistanceToStorage(userCity).block(Duration.ofMillis(100));
+
         return productRepository.findAllByCategoryProductID(id, pageable) // back List<Product>
                 .flatMap((products) -> {
                     String ids = products.stream().map(product -> String.valueOf(product
@@ -73,21 +92,26 @@ public class ProductService {
                     List<ProductFullInfo> productFullInfoList = new ArrayList<>();
 //                    productFullInfoList.
                     for (int i = 0; i < productList.size(); i++) {
+                        ProductFullInfo productFullInfo = new ProductFullInfo();
                         // перебор продуктлиста и достаем оттуда продукттрайдерИД и находим этот ИД в мапе
                         // и добавляем трейдера в продуктфуллинфо
                         if (productList.get(i).getProductTraderID() == productTraderList.get(i).getId()) {
-                            productFullInfoList.get(i).setTraderName(productTraderList.get(i).getName());
-                            productFullInfoList.get(i).setTraderQualityIndex(productTraderList.get(i).getTraderQualityIndex());
+                            if(distanceToStorage != null){
+                              productFullInfo.setDistanceToStorage(distanceToStorage
+                                      .getOrDefault(productList.get(i).getCityStorage(),-1));
+                            }
+                            productFullInfo.setTraderName(productTraderList.get(i).getName());
+                            productFullInfo.setTraderQualityIndex(productTraderList.get(i).getTraderQualityIndex());
 
-                            productFullInfoList.get(i).setNameProduct(productList.get(i).getNameProduct());
-                            productFullInfoList.get(i).setUrlImage(productList.get(i).getUrlImage());
-                            productFullInfoList.get(i).setPrice(productList.get(i).getPrice());
-                            productFullInfoList.get(i).setRating(productList.get(i).getRating());
-                            productFullInfoList.get(i).setQuantityStock(productList.get(i).getQuantityStock());
-                            productFullInfoList.get(i).setDateAdded(productList.get(i).getDateAdded());
-                            productFullInfoList.get(i).setProductTraderID(productList.get(i).getProductTraderID());
-                            productFullInfoList.get(i).setCategoryProductID(productList.get(i).getCategoryProductID());
-
+                            productFullInfo.setUrlImage(productList.get(i).getUrlImage());
+                            productFullInfo.setPrice(productList.get(i).getPrice());
+                            productFullInfo.setRating(productList.get(i).getRating());
+                            productFullInfo.setQuantityStock(productList.get(i).getQuantityStock());
+                            productFullInfo.setDateAdded(productList.get(i).getDateAdded());
+                            productFullInfo.setNameProduct(productList.get(i).getNameProduct());
+                            productFullInfo.setProductTraderID(productList.get(i).getProductTraderID());
+                            productFullInfo.setCategoryProductID(productList.get(i).getCategoryProductID());
+                            productFullInfoList.add(productFullInfo);
                         }
                     }
                     return Flux.just(productFullInfoList);

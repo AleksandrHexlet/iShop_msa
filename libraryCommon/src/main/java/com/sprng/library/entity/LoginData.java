@@ -16,7 +16,7 @@ public class LoginData {
     private int id;
     @NotNull
     @Size(min = 2,max = 99)
-    private String userName;
+    private String userName; // login
     @NotNull
     @Size(min = 2,max = 99)
     private String password;

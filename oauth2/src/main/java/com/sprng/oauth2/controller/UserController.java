@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     @GetMapping("/authorize")
     public  String getUserAuthorizeForm(){
-        return "UserLoginDataFormHTML";
+        return "г";
     }
 }

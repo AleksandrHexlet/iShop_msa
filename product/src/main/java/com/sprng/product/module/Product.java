@@ -30,6 +30,7 @@ public class Product {
     private int quantityStock;
 
     private LocalDate dateAdded;
+    private String cityStorage;
 
     @Positive
     private int productTraderID;
@@ -39,7 +40,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String nameProduct, String urlImage, BigDecimal price, double rating, int quantityStock,
+    public Product(String nameProduct, String urlImage,String cityStorage,BigDecimal price, double rating, int quantityStock,
                    LocalDate dateAdded, int productTraderID, int categoryProductID) {
 
         this.nameProduct = nameProduct;
@@ -48,6 +49,7 @@ public class Product {
         this.rating = rating;
         this.quantityStock = quantityStock;
         this.dateAdded = dateAdded;
+        this.cityStorage = cityStorage;
         this.productTraderID = productTraderID;
 
         this.categoryProductID = categoryProductID;
@@ -66,6 +68,14 @@ public class Product {
 
     public String getNameProduct() {
         return nameProduct;
+    }
+
+    public String getCityStorage() {
+        return cityStorage;
+    }
+
+    public void setCityStorage(String cityStorage) {
+        this.cityStorage = cityStorage;
     }
 
     public String getUrlImage() {

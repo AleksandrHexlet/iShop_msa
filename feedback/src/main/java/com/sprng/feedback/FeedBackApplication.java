@@ -9,9 +9,9 @@ import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
-@ComponentScan({"controller","model"})
+//@ComponentScan({"controller","model"})
 
-@EntityScan({"com.sprng.library.entity"})
+//@EntityScan({"com.sprng.library.entity"})
 @SpringBootApplication
 public class FeedBackApplication {
     public static void main(String[] args) {

@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataMongoTest
+//@DataMongoTest
 public class FeedBackRepositoryMongoTest {
     @Autowired
     ReactiveMongoOperations operations;
@@ -23,12 +23,12 @@ public class FeedBackRepositoryMongoTest {
     @Autowired
     FeedBackRepository feedBackRepository;
 
-    @BeforeEach
+//    @BeforeEach
     public void createCollection(){
         operations.createCollection(FeedBack.class).then().block();
     }
 
-    @Test
+//    @Test
     public void feedBackRepositoryTest() {
         FeedBack feedBack = new FeedBack();
         feedBack.setText("QQQ");

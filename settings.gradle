@@ -8,4 +8,5 @@ include 'feedback'
 include 'category'
 include 'product'
 include 'distanceToNeighboursStorage'
+include 'eureka-server'
 

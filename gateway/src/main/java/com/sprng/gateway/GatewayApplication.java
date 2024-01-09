@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 //@Profile("dev")
 //@Profile({"prod","dev"})
 //@Profile("!dev")
-@Profile("dev")
+//@Profile("dev")
 @SpringBootApplication
 public class GatewayApplication {
     public static void main(String[] args) {

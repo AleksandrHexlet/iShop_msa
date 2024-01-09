@@ -4,6 +4,9 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.sprng.library.entity.Customer;
+import com.sprng.library.exception.IshopResponseException;
+import com.sprng.oauth2.repository.CustomerRepository;
 import com.sprng.oauth2.service.LoginDataDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,10 +49,12 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 public class SecurityConfiguration {
     private LoginDataDetailService loginDataDetailService;
+    private CustomerRepository customerRepository;
 
     @Autowired
     public SecurityConfiguration(LoginDataDetailService loginDataDetailService) {
         this.loginDataDetailService = loginDataDetailService;
+        this.customerRepository = customerRepository;
     }
 
     @Bean
@@ -159,12 +164,13 @@ public class SecurityConfiguration {
                         list.add(role.get());
                         context.getClaims().claims(stringObjectMap -> stringObjectMap.put("scope", list));
                 }
-
-//                Set<String> authorities = principal.getAuthorities().stream()
-//                        .map(authority -> authority.getAuthority())
-//                        .collect(Collectors.toSet());
-//
-//                context.getClaims().claim("role", authorities);
+//                loginDataDetailService.
+                String userName = principal.getName();
+               customerRepository.findByUserName(userName)
+                       .ifPresent((customer1)->{
+                           context.getClaims().claims(addCustomerInfoMap
+                                   -> addCustomerInfoMap.put("customerCity", customer1.getCity()));
+                       });
             }
         };
     }
