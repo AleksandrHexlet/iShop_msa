@@ -1,5 +1,6 @@
 package com.sprng.feedback.service;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,8 @@ public class ClientCustomerAndTraderService {
         this.webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .baseUrl("http://localhost:8081/api/users").build();
-
-
     }
+
 
     public Mono<Boolean> existsByCustomerAndProductTrader(int customerId, int productTraderId, String tokenValue) {
         return webClient.get()

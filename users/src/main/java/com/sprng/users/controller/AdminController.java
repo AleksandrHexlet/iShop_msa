@@ -1,20 +1,22 @@
 package com.sprng.users.controller;
 
-
 import com.sprng.library.entity.AdminIshop;
 import com.sprng.library.exception.IshopResponseException;
+import com.sprng.users.entity.ProductFullInfo;
 import com.sprng.users.service.AdminService;
+import com.sprng.users.service.RestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    AdminService adminService;
+    private AdminService adminService;
+    private RestTemplateService restTemplateService;
 
 
     @Autowired
@@ -33,6 +35,11 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getRestTemplateProduct/{idCategory}")
+    public Page<ProductFullInfo> getProductsFullInfo(@PathVariable int idCategory){
+     return restTemplateService.createRequest(idCategory);
+
+    }
 
 
 

@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
@@ -22,7 +24,8 @@ import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
-@EnableMethodSecurity(securedEnabled = true)
+//@EnableMethodSecurity(securedEnabled = true)
+
 public class SecurityConfiguration {
 
     @Bean
@@ -30,6 +33,11 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder(4);
     }
 
+
+    @Bean
+    public ReactiveJwtDecoder reactiveJwtDecoder(){
+        return NimbusReactiveJwtDecoder.withIssuerLocation("http://localhost:8082").build();
+    }
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {

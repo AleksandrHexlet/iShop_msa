@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -11,7 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Flux;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
-@EnableMethodSecurity(securedEnabled = true)
+//@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
     @Bean
@@ -29,6 +30,11 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder(4);
     }
 
+
+//    @Bean
+//    public ReactiveJwtDecoder reactiveJwtDecoder(){
+//        return NimbusReactiveJwtDecoder.withIssuerLocation("http://localhost:8082").build();
+//    }
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
@@ -50,8 +56,10 @@ public class SecurityConfiguration {
 //                        .hasAnyRole("ROLE_ADMIN", "ROLE_READONLY_ADMIN")
                         .anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter)))
-//                        .jwt(Customizer.withDefaults()))
+//                        .jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter)
+//                                .jwtDecoder(reactiveJwtDecoder())))
+//
+                        .jwt(Customizer.withDefaults()))
                 .build();
     }
 
