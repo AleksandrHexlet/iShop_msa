@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "ishop_mra_registration"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: "db_state"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      #      - .:C:\Users\vin12\Downloads
+      - /db_state
+    ports:
+      - "5433:5433"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4GB
