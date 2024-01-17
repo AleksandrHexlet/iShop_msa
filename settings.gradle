@@ -9,4 +9,6 @@ include 'category'
 include 'product'
 include 'distanceToNeighboursStorage'
 include 'eureka-server'
+include 'orderService'
+include 'paymantService'
 

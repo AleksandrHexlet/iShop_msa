@@ -20,6 +20,7 @@ public class ProductTrader  extends  LoginData{
 //    @DecimalMin(value = "0")
     private BigDecimal traderBill;
     private String rate;
+    private int discountFromTrader;
 
 //    @ManyToOne
 //    TraderRating traderRating;

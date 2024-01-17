@@ -32,6 +32,7 @@ public class Product {
     private LocalDate dateAdded;
     private String cityStorage;
 
+//    private int discount;
     @Positive
     private int productTraderID;
     @Positive

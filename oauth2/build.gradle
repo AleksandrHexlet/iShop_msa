@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     implementation project(':libraryCommon')
-    implementation project(path: ':users')
+//    implementation project(path: ':users')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.1.4'
@@ -41,4 +41,8 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
