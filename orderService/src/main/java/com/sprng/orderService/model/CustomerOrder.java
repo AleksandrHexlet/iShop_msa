@@ -18,12 +18,18 @@ public class CustomerOrder {
     private String userNameCustomer;
     private LocalDateTime createOrder;
 
-    private int DiscountOrder;
+    private int discountOrder;
 //    private double
 
 
     public enum StatusOrder {
         NEW,
+        ORDER_ACCEPTED,
+        ORDER_FORMED,
+        ORDER_PAID,
+        ORDER_SENT_BUYER,
+        ORDER_DELIVERED,
+        ORDER_CANCELLED,
         PAID,
         NOT_PAID,
         CLOSE_ORDER,
@@ -42,6 +48,29 @@ public class CustomerOrder {
         }
     }
 
+    public void setOrderDataDTO(List<OrderDataDTO> orderDataDTO) {
+        this.orderDataDTO = orderDataDTO;
+    }
+
+    public void setStatusOrder(StatusOrder statusOrder) {
+        this.statusOrder = statusOrder;
+    }
+
+    public void setUserNameCustomer(String userNameCustomer) {
+        this.userNameCustomer = userNameCustomer;
+    }
+
+    public void setCreateOrder(LocalDateTime createOrder) {
+        this.createOrder = createOrder;
+    }
+
+    public int getDiscountOrder() {
+        return discountOrder;
+    }
+
+    public void setDiscountOrder(int discountOrder) {
+        this.discountOrder = discountOrder;
+    }
 
     public List<OrderDataDTO> getOrderDataDTO() {
         return orderDataDTO;

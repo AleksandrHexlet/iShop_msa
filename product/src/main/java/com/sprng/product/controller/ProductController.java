@@ -2,6 +2,7 @@ package com.sprng.product.controller;
 
 
 import com.sprng.product.module.Product;
+import com.sprng.product.module.ProductCountDTO;
 import com.sprng.product.module.ProductFullInfo;
 import com.sprng.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
@@ -44,13 +47,18 @@ public class ProductController {
        });
     }
 
+    @GetMapping("/count/{idList}")
+    public Flux<ProductCountDTO> getCountProductsByID(@PathVariable List<Integer> idList){
+        return productService.getCountProductsByID(idList);
 
+    }
+}
     // тут для trader вернем имя и traderQualityIndex для отображения в карточке
     // Если пользователь открывает карточку, тогда приходит отдельный запрос с id producta и мы вернем город
     // нахождения склада с товаром, отзывы о продукте и рейтинг продукта.
     // Как сделать пангинацию для webFlux and r2dbc ?
 
-}
+
 
 //
 //1. [POST] Добавить продукт.

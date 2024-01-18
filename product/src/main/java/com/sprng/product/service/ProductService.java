@@ -3,6 +3,7 @@ package com.sprng.product.service;
 import com.sprng.library.entity.ProductTrader;
 import com.sprng.library.exception.IshopResponseException;
 import com.sprng.product.module.Product;
+import com.sprng.product.module.ProductCountDTO;
 import com.sprng.product.module.ProductFullInfo;
 import com.sprng.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class ProductService {
         Map<String,Integer> distanceToStorage = clientCalculationCostDeliveryService
                 .getDistanceToStorage(userCity).block(Duration.ofMillis(100));
 
-        return productRepository.findAllByCategoryProductID(id, pageable) // back List<Product>
+        return productRepository.findAllByCategoryProductId(id, pageable) // back List<Product>
                 .flatMap((products) -> {
                     String ids = products.stream().map(product -> String.valueOf(product
                                     .getProductTraderID()))
@@ -118,6 +119,13 @@ public class ProductService {
                 })
                 .zipWith(productRepository.count())
                 .map(tuple -> new PageImpl<ProductFullInfo>(tuple.getT1(), pageable, tuple.getT2()));
+    }
+
+    public Flux<ProductCountDTO> getCountProductsByID(List<Integer> idList) {
+      return  productRepository.findAllByIdIn(idList)
+                 .flatMap(product ->{
+                     return Flux.just(new ProductCountDTO(product.getId(), product.getQuantityStock()));
+                 } );
     }
 }
 

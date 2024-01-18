@@ -1,6 +1,5 @@
 package com.sprng.users.repository;
 
-import com.sprng.library.entity.CustomerOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

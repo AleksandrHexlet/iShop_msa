@@ -7,9 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.sprng.library.entity.Customer;
-import com.sprng.library.entity.CustomerOrder;
 import com.sprng.library.entity.Product;
-import com.sprng.library.entity.ProductCustomerOrder;
 
 import java.io.IOException;
 import java.util.Iterator;
