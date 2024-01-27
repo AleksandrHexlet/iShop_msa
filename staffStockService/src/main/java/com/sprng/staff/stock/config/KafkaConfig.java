@@ -8,15 +8,15 @@ public class KafkaConfig {
 
 
     @Bean
-    public NewTopic orderFail() {
-        return TopicBuilder.name("orderFail")
+    public NewTopic orderSuccess() {
+        return TopicBuilder.name("staffStockSuccess")
                 .partitions(2) // число разделов внутри топика по количеству получателей, чтобы они не ждали в очередеи
                 .replicas(1) //  количество инстансов топика, делаем если большая нагрузка на топик и тогда брокер сам раскидает задачи между топиками
                 .build();
     }
     @Bean
-    public NewTopic orderSuccess() {
-        return TopicBuilder.name("orderSuccess")
+    public NewTopic orderFail() {
+        return TopicBuilder.name("staffStockFail")
                 .partitions(2) // число разделов внутри топика по количеству получателей, чтобы они не ждали в очередеи
                 .replicas(1) //  количество инстансов топика, делаем если большая нагрузка на топик и тогда брокер сам раскидает задачи между топиками
                 .build();

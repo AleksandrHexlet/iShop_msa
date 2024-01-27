@@ -49,14 +49,14 @@ public class StaffStockService {
                 }
                 staffStockRepository.save(staffStockFromDB);
             });
-            kafkaSend("orderSuccess", 0, staffStockProductOrder.getId(), staffStockProductOrder);
+            kafkaSend("staffStockSuccess", 0, staffStockProductOrder.getId(), staffStockProductOrder);
         } catch (Exception exception) {
             staffStockProductOrder.setSuccess(false);
-            kafkaSend("orderFail", 0, staffStockProductOrder.getId(), staffStockProductOrder);
+            kafkaSend("staffStockFail", 0, staffStockProductOrder.getId(), staffStockProductOrder);
         }
     }
 
-    @KafkaListener(topicPartitions = @TopicPartition(topic = "orderFail", partitions = "1")) // для снятия резерва
+    @KafkaListener(topicPartitions = @TopicPartition(topic = "notificationFail", partitions = "0")) // для снятия резерва
     public void rollBackDB(@Payload StaffStock staffStock, @Header(KafkaHeaders.RECEIVED_KEY) int id) {
         staffStockRepository.findByNamePosition(staffStock.getNamePosition())
                 .doOnNext(staffStockFromDB -> {

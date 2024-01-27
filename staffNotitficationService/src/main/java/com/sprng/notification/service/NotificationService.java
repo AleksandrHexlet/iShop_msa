@@ -17,7 +17,7 @@ public class NotificationService {
 
     KafkaTemplate <Integer,StaffStock> kafkaTemplate;
     NotificationRepository notificationRepository;
-    @KafkaListener(topicPartitions = @TopicPartition(topic = "orderSuccess",partitions = "0"))
+    @KafkaListener(topicPartitions = @TopicPartition(topic = "staffStockSuccess",partitions = "0"))
     public void getMessageFromHandler(StaffStock staffStock){
         try {
 
@@ -28,7 +28,7 @@ public class NotificationService {
             // через столько-то дней
         }
         } catch (Exception exception){
-            kafkaTemplate.send("orderFail",1,staffStock.getId(),staffStock)
+            kafkaTemplate.send("notificationFail",0,staffStock.getId(),staffStock)
                     .whenComplete(((staffStockSendResult, throwable) -> {
                         // отправляем заказчику, что резервирование не удалось и просьбу повторите заказ
                         if(throwable !=null){
