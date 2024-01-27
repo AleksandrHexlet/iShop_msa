@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @Service
 public class ClientCustomerAndTraderService {
     WebClient webClient;
@@ -24,7 +26,8 @@ public class ClientCustomerAndTraderService {
                         customerId, productTraderId)
                 .headers(httpHeaders -> httpHeaders.setBearerAuth(tokenValue))
                 .retrieve()
-                .bodyToMono(Boolean.class);
+                .bodyToMono(Boolean.class)
+                .timeout(Duration.ofMillis(100));
 //            .onErrorReturn(false);
     }
 

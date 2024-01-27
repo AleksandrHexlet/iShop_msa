@@ -1,6 +1,9 @@
 package com.sprng.orderService.model;
 
+import org.springframework.data.annotation.Id;
+
 public class OrderDataDTO {
+
     private  int idProduct;
     private int countProduct;
 

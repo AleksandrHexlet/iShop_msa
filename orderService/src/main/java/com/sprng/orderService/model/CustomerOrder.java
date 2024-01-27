@@ -11,8 +11,9 @@ import java.util.Locale;
 
 @Document
 public class CustomerOrder {
+
     @Id
-    private int id;
+    private int orderId;
     private List<OrderDataDTO> orderDataDTO;
     private StatusOrder statusOrder;
     private String userNameCustomer;
@@ -87,10 +88,10 @@ public class CustomerOrder {
     public LocalDateTime getCreateOrder() {
         return createOrder;
     }
-
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
+
     //    com.sprng.library.entity.CustomerOrder.OrderStatus.NEW.setStatusAssigned(LocalDateTime.now())
 
 }
