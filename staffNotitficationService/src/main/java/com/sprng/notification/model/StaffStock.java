@@ -1,4 +1,4 @@
-package com.sprng.staff.stock.model;
+package com.sprng.notification.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
@@ -18,6 +18,8 @@ public class StaffStock {
     private int neededOrder;
 
     private boolean isSuccess;
+
+
 
     public StaffStock(String namePosition, int count) {
         this.namePosition = namePosition;
