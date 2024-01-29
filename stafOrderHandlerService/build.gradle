@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'org.springframework.kafka:spring-kafka:3.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.1.8'
 
     implementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -41,4 +42,4 @@ test {
 
 tasks.named('bootBuildImage') {
     builder = 'paketobuildpacks/builder-jammy-base:latest'
-}
+} //для создания образов в докере по имени самого сервиса(модуля)

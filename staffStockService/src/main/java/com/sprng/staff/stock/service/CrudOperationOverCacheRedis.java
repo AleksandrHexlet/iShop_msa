@@ -8,30 +8,25 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.concurrent.TimeUnit;
-
 @Service
-public class StaffStockService {
+public class CrudOperationOverCacheRedis {
     private KafkaTemplate<Integer, StaffStock> kafkaTemplate;
     private StaffStockRepository staffStockRepository;
     private RedisTemplate<Integer, StaffStock> redisTemplate;
 
     @Autowired
-    public StaffStockService(KafkaTemplate<Integer, StaffStock> kafkaTemplate,
-                             StaffStockRepository staffStockRepository, RedisTemplate<Integer, StaffStock> redisTemplate) {
+    public CrudOperationOverCacheRedis(KafkaTemplate<Integer, StaffStock> kafkaTemplate,
+                                       StaffStockRepository staffStockRepository, RedisTemplate<Integer, StaffStock> redisTemplate) {
         this.kafkaTemplate = kafkaTemplate;
         this.staffStockRepository = staffStockRepository;
         this.redisTemplate = redisTemplate;

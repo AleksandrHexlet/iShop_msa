@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.config.TopicBuilder;
 
 public class KafkaConfig {
-
-
     @Bean
     public NewTopic orderSuccess() {
         return TopicBuilder.name("staffStockSuccess")
